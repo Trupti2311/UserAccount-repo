@@ -12,11 +12,12 @@ import com.smsp.service.UserService;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
+
 @Controller
 public class UserController {
-	
-@Autowired
-UserService userService;
+
+	@Autowired
+	UserService userService;
 
 // @RequestMapping(path="/login", method = RequestMethod.POST)
 ////	public String welMsg(@ModelAttribute User user) {
@@ -29,29 +30,28 @@ UserService userService;
 //		return "index";
 //	}
 
-@RequestMapping(path="/dashboard", method = RequestMethod.POST)
-public ModelAndView userValidation(User user) {
-System.out.println(user.getEmail());
-System.out.println(user.getPassword());
+	@RequestMapping(path = "/dashboard", method = RequestMethod.POST)
+	public ModelAndView userValidation(User user) {
+		System.out.println(user.getEmail());
+		System.out.println(user.getPassword());
 
-if(userService.validateUser(user)) {
-System.out.println("user found in db");
-return new ModelAndView("dashboardUser");
-}else {
-	System.out.println("user not found in db");
-	return new ModelAndView("login","errormsg","Login fail....");
-}
+		if (userService.validateUser(user)) {
+			System.out.println("user found in db");
+			return new ModelAndView("dashboardUser");
+		} else {
+			System.out.println("user not found in db");
+			return new ModelAndView("login", "errormsg", "Login fail....");
+		}
 
-}
+	}
 
+	@RequestMapping(path = "/register", method = RequestMethod.POST)
+	public ModelAndView userRegistration(User user) {
 
-@RequestMapping(path="/register", method = RequestMethod.POST)
-public ModelAndView userRegistration(User user) {
+		userService.save(user);
+		System.out.println("Resister controller called");
 
-      userService.save(user);
-  	System.out.println("Resister controller called");
-
-	return new ModelAndView("login","successMsg","	Registration Successful");
-}
+		return new ModelAndView("login", "successMsg", "	Registration Successful");
+	}
 
 }

@@ -1,6 +1,12 @@
-<%@page import="java.sql.DriverManager" %>
-<%@page import="java.sql.SQLException" %>
-<%@page import="java.sql.Statement" %>
+<%@page import="java.net.CookieHandler"%>
+<%@page import="java.io.PrintWriter"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page import="java.sql.DriverManager"%>
+<%@ page import="java.sql.SQLException"%>
+<%@ page import="java.sql.Statement"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -866,8 +872,9 @@
               <!-- /.card-header -->
               
               <sql:query dataSource="${webappDataSource}" var="result">
-              SELECT * FROM springmvc_01_sampleapp.user;
+              		SELECT * FROM springmvc_01_sampleapp.user;
               </sql:query>
+              
               <div class="card-body">
                 <table id="example2" class="table table-bordered table-hover">
                   <thead>
@@ -879,7 +886,7 @@
                   </tr>
                   </thead>
                   <tbody>
-               <c:forEach var="row" items="result.rows">
+               <c:forEach var="row" items="${result.rows}">
                <tr>
                     <td>${row.id}</td>
                     <td>${row.email}</td>
